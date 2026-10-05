@@ -80,4 +80,4 @@ En un entorno compartido, crea el usuario administrador mediante el flujo de reg
 
 ## Observaciones finales
 
-La aplicación está preparada para una presentación académica y cumple la mayoría de los requisitos del caso práctico con una implementación funcional y segura. Para un despliegue real en producción, se recomienda configurar HTTPS, secretos fuertes y un dominio con certificado TLS.
+La aplicación se encuentra en proceso de desarrollo y actualmente cuenta con una implementación funcional que cumple con la mayoría de los requisitos establecidos para el caso práctico. Se continúa trabajando en la mejora y optimización del sistema, así como en la implementación de medidas de seguridad adicionales. Como parte de las siguientes etapas, se contempla configurar HTTPS, establecer secretos seguros y habilitar un dominio con su respectivo certificado TLS, con el objetivo de preparar la aplicación para un futuro despliegue en un entorno de producción.
