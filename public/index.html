@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confidencialidad | Seguridad en computo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main id="app">
+    <section id="auth-view" class="auth-shell">
+      <div class="auth-copy"><span class="eyebrow">SEGURIDAD EN COMPUTO / 01</span><h1>Confidencialidad<br><em>por diseño.</em></h1><p>Un espacio de trabajo donde cada acción tiene el permiso correcto y cada acceso deja una huella verificable.</p></div>
+      <div class="auth-panel">
+        <div class="auth-header">
+          <span class="eyebrow">PORTAL DE ACCESO</span>
+          <h2>Bienvenido</h2>
+          <p>Continúa en tu espacio seguro.</p>
+        </div>
+        <div class="auth-tabs" role="tablist" aria-label="Acceso a la plataforma">
+          <button class="tab active" type="button" data-mode="login" role="tab" aria-selected="true">Iniciar sesión</button>
+          <button class="tab" type="button" data-mode="register" role="tab" aria-selected="false">Crear cuenta</button>
+        </div>
+
+        <form id="auth-form" class="auth-form" novalidate>
+          <label id="name-field" class="hidden">
+            <span>Nombre</span>
+            <div class="field-with-icon"><input name="name" type="text" maxlength="80" autocomplete="name" placeholder="Tu nombre completo"></div>
+          </label>
+          <label>
+            <span>Correo electrónico</span>
+            <div class="field-with-icon"><input name="email" type="email" required autocomplete="email" placeholder="usuario@dominio.com"></div>
+          </label>
+          <label>
+            <span>Contraseña</span>
+            <div class="field-with-icon password-field">
+              <input id="passwordInput" name="password" type="password" required minlength="8" autocomplete="current-password" placeholder="Introduce tu contraseña">
+              <button type="button" class="password-toggle" data-target="passwordInput" aria-label="Mostrar contraseña">Ver</button>
+            </div>
+          </label>
+
+          <div id="password-strength" class="password-strength hidden" aria-live="polite">
+            <div class="strength-bar"><span></span></div>
+            <small id="strength-label">Fuerza de contraseña</small>
+          </div>
+
+          <button class="primary" id="submit-btn" type="submit">
+            <span id="submit-label">Entrar al espacio</span>
+            <span class="button-loader hidden" aria-hidden="true"></span>
+          </button>
+        </form>
+
+        <button id="forgot" type="button" class="text-button">¿Olvidaste tu contraseña?</button>
+        <p id="auth-message" class="message" aria-live="polite"></p>
+        <p class="auth-note">Acceso protegido con autenticación y permisos por rol.</p>
+
+        <section id="reset-panel" class="reset-panel hidden" aria-labelledby="reset-title">
+          <div class="reset-heading">
+            <span class="eyebrow">RECUPERACIÓN DE ACCESO</span>
+            <h2 id="reset-title">Restablece tu contraseña</h2>
+            <p>Solicita un código y define una nueva contraseña sin salir de esta pantalla.</p>
+          </div>
+          <form id="reset-form" class="auth-form" novalidate>
+            <label>
+              <span>Correo electrónico</span>
+              <div class="field-with-icon"><input id="reset-email" name="email" type="email" required autocomplete="email" placeholder="usuario@dominio.com"></div>
+            </label>
+            <label>
+              <span>Código de recuperación</span>
+              <div class="field-with-icon"><input id="reset-token" name="token" type="text" minlength="16" autocomplete="one-time-code" placeholder="Pega aquí tu código"></div>
+            </label>
+            <label>
+              <span>Nueva contraseña</span>
+              <div class="field-with-icon"><input id="reset-password" name="password" type="password" minlength="8" autocomplete="new-password" placeholder="Mínimo 8 caracteres"></div>
+            </label>
+            <div class="reset-actions">
+              <button class="secondary-button" id="cancel-reset" type="button">Cancelar</button>
+              <button class="primary" type="submit"><span>Actualizar contraseña</span></button>
+            </div>
+          </form>
+          <p id="reset-message" class="message" aria-live="polite"></p>
+        </section>
+      </div>
+    </section>
+    <section id="app-view" class="app-shell hidden"><aside class="sidebar"><div class="brand-mark"><span>•</span></div><div><span class="eyebrow">ESPACIO PRIVADO</span><h2>Panel de control</h2></div><nav><button class="nav-item active" data-page="overview">◈ <span>Resumen</span></button><button class="nav-item" data-page="content">▣ <span>Contenido</span></button><button class="nav-item admin-only" data-page="users">◎ <span>Usuarios</span></button><button class="nav-item admin-only" data-page="roles">⊙ <span>Roles y permisos</span></button><button class="nav-item admin-only" data-page="audit">≡ <span>Auditoría</span></button></nav><div class="sidebar-bottom"><div class="security-status"><span></span> API protegida · JWT</div><button id="logout" class="logout">Cerrar sesión</button></div></aside><div class="main"><header><div><span class="eyebrow" id="section-kicker">VISTA GENERAL</span><h1 id="page-title">Tu espacio seguro</h1></div><div class="profile"><div class="avatar" id="avatar">A</div><div><strong id="profile-name">Usuario</strong><small id="profile-role">Rol</small></div></div></header><div id="page-content"></div></div></section>
+  </main><div id="toast" class="toast"></div><script src="/app.js"></script>
+</body></html>
