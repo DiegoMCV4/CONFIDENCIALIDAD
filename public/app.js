@@ -100,6 +100,15 @@ function togglePasswordVisibility(button) {
   button.setAttribute('aria-label', isHidden ? 'Ocultar contraseña' : 'Mostrar contraseña');
 }
 
+function applyUserToShell(user) {
+  $('#profile-name').textContent = user.name;
+  $('#profile-role').textContent = user.roles.map((role) => role.name).join(' · ');
+  $('#avatar').textContent = user.name[0].toUpperCase();
+  document.querySelectorAll('[data-permission]').forEach((item) => {
+    item.classList.toggle('hidden', !user.permissions.includes(item.dataset.permission));
+  });
+}
+
 document.querySelectorAll('.tab').forEach((tab) => tab.addEventListener('click', () => setMode(tab.dataset.mode)));
 
 document.querySelectorAll('.password-toggle').forEach((button) => button.addEventListener('click', () => togglePasswordVisibility(button)));
@@ -188,12 +197,7 @@ function enter(user) {
   state.user = user;
   $('#auth-view').classList.add('hidden');
   $('#app-view').classList.remove('hidden');
-  $('#profile-name').textContent = user.name;
-  $('#profile-role').textContent = user.roles.map((role) => role.name).join(' · ');
-  $('#avatar').textContent = user.name[0].toUpperCase();
-  document.querySelectorAll('.admin-only').forEach((item) => {
-    item.classList.toggle('hidden', !user.permissions.includes('users:manage'));
-  });
+  applyUserToShell(user);
   renderPage();
 }
 
@@ -211,6 +215,19 @@ async function renderPage() {
     roles: ['CONTROL DE ACCESO', 'Roles y permisos'],
     audit: ['TRAZABILIDAD', 'Registro de auditoría'],
   };
+
+  try {
+    const current = await api('/auth/me');
+    state.user = current.user;
+    applyUserToShell(state.user);
+  } catch {
+    return;
+  }
+
+  const pagePermissions = { users: 'users:manage', roles: 'roles:manage', audit: 'audit:read' };
+  if (pagePermissions[state.page] && !state.user.permissions.includes(pagePermissions[state.page])) {
+    state.page = 'overview';
+  }
 
   $('#section-kicker').textContent = pages[state.page][0];
   $('#page-title').textContent = pages[state.page][1];
