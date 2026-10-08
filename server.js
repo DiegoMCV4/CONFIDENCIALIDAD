@@ -111,8 +111,15 @@ function auth(req, res, next) {
   const token = header.startsWith('Bearer ') ? header.slice(7) : req.cookies.access_token;
   if (!token) return res.status(401).json({ error: 'Autenticacion requerida' });
   try {
-    req.user = jwt.verify(token, jwtSecret);
-    if (!userDetails(req.user.sub)?.active) return res.status(401).json({ error: 'Cuenta inactiva' });
+    const claims = jwt.verify(token, jwtSecret);
+    const details = userDetails(claims.sub);
+    if (!details?.active) return res.status(401).json({ error: 'Cuenta inactiva' });
+    req.user = {
+      ...claims,
+      email: details.email,
+      roles: details.roles.map((role) => role.name),
+      permissions: details.permissions,
+    };
     next();
   } catch {
     return res.status(401).json({ error: 'Sesion invalida o expirada' });
